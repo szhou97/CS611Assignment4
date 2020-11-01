@@ -5,5 +5,11 @@ public class LightningSpell extends Spell {
         super(name, price, minLevel, damage, manaCost);
         
     }
+
+    @Override
+    void attack(Character target) {
+        // TODO Auto-generated method stub
+
+    }
     
 }

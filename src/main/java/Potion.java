@@ -1,11 +1,11 @@
 public class Potion extends Item implements Comsumable{
-    private final String attAffected;
+    private final String attribute;
     private final int attIncrease;
     private int usage;
     public Potion(String name, int price, int minLevel, 
-                        int attIncrease, String attAffected) {
+                        int attIncrease, String attribute) {
         super(name, price, minLevel);
-        this.attAffected = attAffected;
+        this.attribute = attribute;
         this.attIncrease = attIncrease;
         usage = 1;
     }
@@ -16,6 +16,14 @@ public class Potion extends Item implements Comsumable{
             return false;
         else
             return true;
+    }
+
+    public String getAttribute() {
+        return this.attribute;
+    }
+
+    public int getAttIncrease() {
+        return this.attIncrease;
     }
     
 }

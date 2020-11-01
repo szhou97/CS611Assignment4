@@ -6,7 +6,8 @@ public class FireSpell extends Spell {
         super(name, price, minLevel, damage, manaCost);
     }
 
-    public void reduceDefense() {
+    @Override
+    public void attack(Character target) {
 
     }
     

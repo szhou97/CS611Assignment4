@@ -11,5 +11,9 @@ public class Weapon extends Item implements Damage {
     public int getBaseDamage() {
         return this.damage;
     }
+
+    public int getNumberHands() {
+        return this.hand;
+    }
     
 }

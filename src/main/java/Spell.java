@@ -8,12 +8,18 @@ public abstract class Spell extends Item implements Damage {
         this.manaCost = manaCost;
     }
 
+    abstract void attack(Character target);
+
     public int getManaCost() {
         return this.manaCost;
     }
 
     public int getBaseDamage() {
         return this.damage;
+    }
+
+    public int reduceAttribute(int baseAttribute) {
+        return (int) (baseAttribute * 0.9);
     }
     
 }

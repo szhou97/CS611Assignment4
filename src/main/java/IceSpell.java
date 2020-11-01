@@ -5,7 +5,10 @@ public class IceSpell extends Spell {
         super(name, price, minLevel, damage, manaCost);
     }
 
-    public void reduceDamage() {
-        
+    @Override
+    void attack(Character target) {
+        // TODO Auto-generated method stub
+
     }
+
 }

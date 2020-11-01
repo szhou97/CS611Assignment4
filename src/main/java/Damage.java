@@ -1,3 +1,3 @@
 public interface Damage {
-    public int getBaseDamage();
+    int getBaseDamage();
 }
