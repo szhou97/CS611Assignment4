@@ -1,20 +1,16 @@
 import java.util.ArrayList;
 
 public class FileScanner {
-    private String[] files;
-    public FileScanner(String[] files) {
-        this.files = files;
+    private MarketStock stock;
+    private HeroPool heros;
+    
+    private FileScanner(String[] files) {
+
     }
 
-    public ArrayList<Object> scan(String fileType) {
+    public ArrayList<Weapon> ScanWeaponry(String file) {
         
     }
 
-    public ArrayList<Item> scanItems() {
-        
-    }
-
-    public ArrayList<Character> scanCharacters() {
-
-    }
+    public 
 }

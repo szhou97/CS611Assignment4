@@ -1,6 +1,6 @@
 public abstract class Hero extends Character implements Playable{
     protected int strength, agility, wealth, experience;
-    private Inventory inventory;
+    private PlayerInventory inventory;
     public Hero(String name, int level, int health, int strength, int agility,
                             int wealth, int experience) {
         super(name, level, health);
@@ -8,7 +8,7 @@ public abstract class Hero extends Character implements Playable{
         this.attributes.add("agility", agility);
         this.attributes.add("wealth", wealth);
         this.attributes.add("experience", experience);
-        this.inventory = new Inventory();
+        this.inventory = new PlayerInventory();
     }
 
 

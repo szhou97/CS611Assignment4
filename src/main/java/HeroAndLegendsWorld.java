@@ -2,9 +2,11 @@ public class HeroAndLegendsWorld extends Grid {
     private Player player;
     private int playerPositionX;
     private int playerPositionY;
-    public HeroAndLegendsWorld(int size, Player player) {
+    private MarketStock stock;
+    public HeroAndLegendsWorld(int size, Player player, MarketStock stock) {
         super(size);
         this.player = player;
+        this.stock = stock;
         this.populateGrid();
         this.spawn();
     }
@@ -17,7 +19,7 @@ public class HeroAndLegendsWorld extends Grid {
                     this.grid[i][j] = new CommonTile();
                 } else {
                     if (ChanceGenerator.generateChance(50)) {
-                        this.grid[i][j] = new Market();
+                        this.grid[i][j] = new Market(stock);
                     } else {
                         this.grid[i][j] = new UnreachableTile();
                     }

@@ -6,12 +6,18 @@ public abstract class Item {
     private final int minLevel;
     protected final ArrayList<String> attNames;
     protected final Attributes attributes;
+    protected int availableNumbers;
     public Item(String name, int price, int minLevel) {
         this.name = name;
         this.price = price;
         this.minLevel = minLevel;
+        this.availableNumbers = -1;
         this.attributes = new Attributes();
         this.attNames = new ArrayList<String>();
+    }
+
+    public void setAvailableNumbers(int number) {
+        this.availableNumbers = number;
     }
     
 	public String getName() {

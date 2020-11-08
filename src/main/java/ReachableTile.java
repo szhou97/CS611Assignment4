@@ -1,5 +1,5 @@
 public abstract class ReachableTile extends Tile implements Accessible {
-    private Player player;
+    protected Player player;
     public ReachableTile() {
         this.playerExists = false;
         this.player = null;

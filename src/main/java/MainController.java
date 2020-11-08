@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
-public class Controller {
+public class MainController {
     private Grid grid;
-    public Controller(Grid grid) {
+    public MainController(Grid grid) {
         this.grid = grid;
 
     }
