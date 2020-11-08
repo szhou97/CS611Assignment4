@@ -1,8 +1,8 @@
 public class Dragon extends Monster {
     private final String monsterType;
     public Dragon(String name, int level, int health, 
-            int baseDamage, int baseDefense, int dodgeChance) {
-        super(name, level, health, baseDamage, baseDefense, dodgeChance);
+            int damage, int defense, int dodgeChance) {
+        super(name, level, health, damage, defense, dodgeChance);
         this.monsterType = "Dragon";
     }
 
@@ -10,7 +10,4 @@ public class Dragon extends Monster {
     String getType() {
         return this.monsterType;
     }
-
-    
-    
 }

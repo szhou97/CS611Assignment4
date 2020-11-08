@@ -1,4 +1,4 @@
-public abstract class Spell extends Item implements Damage {
+public abstract class Spell extends Item {
     private final int damage;
     private final int manaCost;
     public Spell(String name, int price, int minLevel, 

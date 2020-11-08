@@ -1,4 +1,4 @@
-public class Weapon extends Item implements Damage {
+public class Weapon extends Item {
     private final int damage;
     private final int hand;
     public Weapon(String name, int price, int minLevel, int damage, int hand) {
@@ -7,7 +7,6 @@ public class Weapon extends Item implements Damage {
         this.hand = hand;
     }
 
-    @Override
     public int getBaseDamage() {
         return this.damage;
     }

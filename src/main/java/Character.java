@@ -1,10 +1,11 @@
 public abstract class Character {
-    protected final String name;
-    protected int level, health;
+    private final String name;
+    protected Attributes attributes;
     public Character(String name, int level, int health) {
         this.name = name;
-        this.level = level;
-        this.health = health;
+        this.attributes = new Attributes();
+        this.attributes.add("level", level);
+        this.attributes.add("health", health);
     }
 
     abstract String getType();
@@ -14,10 +15,10 @@ public abstract class Character {
     }
 
     public int getLevel() {
-        return this.level;
+        return this.attributes.get("level");
     }
 
     public int getHealth() {
-        return this.health;
+        return this.attributes.get("health");
     }
 }

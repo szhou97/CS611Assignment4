@@ -1,12 +1,10 @@
-public class Armor extends Item implements Defense {
-    private final int damageRedux;
+public class Armor extends Item {
     public Armor(String name, int price, int minLevel, int damageRedux) {
         super(name, price, minLevel);
-        this.damageRedux = damageRedux;
+        this.attributes.add("damage_reduction", damageRedux);
     }
 
     public int getDamageRedux() {
-        return this.damageRedux;
+        return this.attributes.get("damage_reduction");
     }
-    
 }

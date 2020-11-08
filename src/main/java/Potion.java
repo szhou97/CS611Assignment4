@@ -1,4 +1,4 @@
-public class Potion extends Item implements Comsumable{
+public class Potion extends Item {
     private final String attribute;
     private final int attIncrease;
     private int usage;
@@ -10,12 +10,15 @@ public class Potion extends Item implements Comsumable{
         usage = 1;
     }
 
-    @Override
     public boolean usage() {
         if (usage <= 0) 
             return false;
         else
             return true;
+    }
+
+    public void usePotion() {
+        this.usage--;
     }
 
     public String getAttribute() {

@@ -1,11 +1,14 @@
 public abstract class Monster extends Character {
-    protected int baseDamage, baseDefense, dodgeChance;
     public Monster(String name, int level, int health, 
-                    int baseDamage, int baseDefense, int dodgeChance) {
+                    int damage, int defense, int dodgeChance) {
         super(name, level, health);
-        this.baseDamage = baseDamage;
-        this.baseDefense = baseDefense;
-        this.dodgeChance = dodgeChance;
+        this.attributes.add("damage", damage);
+        this.attributes.add("defense", defense);
+        this.attributes.add("dodge_chance", dodgeChance);
     }
-    
+
+    public int getDamage() {
+        return this.attributes.get("damage");
+    }
+
 }

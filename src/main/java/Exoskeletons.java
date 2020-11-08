@@ -10,5 +10,4 @@ public class Exoskeletons extends Monster {
     String getType() {
         return this.monsterType;
     }
-    
 }
