@@ -1,21 +1,19 @@
-public abstract class Spell extends Item {
-    private final int damage;
-    private final int manaCost;
+public class Spell extends Item {
+    private final String spellType;
     public Spell(String name, int price, int minLevel, 
-                            int damage, int manaCost) {
+                    int damage, int manaCost, String spellType) {
         super(name, price, minLevel);
-        this.damage = damage;
-        this.manaCost = manaCost;
+        this.attributes.add("damage", damage);
+        this.attributes.add("mana_cost", manaCost);
+        this.spellType = spellType;
     }
-
-    abstract void attack(Character target);
 
     public int getManaCost() {
-        return this.manaCost;
+        return this.attributes.get("mana_cost");
     }
 
-    public int getBaseDamage() {
-        return this.damage;
+    public int getDamage() {
+        return this.attributes.get("damage");
     }
 
     public int reduceAttribute(int baseAttribute) {

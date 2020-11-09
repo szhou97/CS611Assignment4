@@ -1,19 +1,9 @@
-public class Potion extends Item implements Comsumable{
-    private final String attribute;
-    private final int attIncrease;
+public class Potion extends Item implements Comsumable {
     public Potion(String name, int price, int minLevel, 
                         int attIncrease, String attribute) {
         super(name, price, minLevel);
-        this.attribute = attribute;
-        this.attIncrease = attIncrease;
-    }
-
-    public String getAttribute() {
-        return this.attribute;
-    }
-
-    public int getAttIncrease() {
-        return this.attIncrease;
+        this.attNames.add(attribute);
+        this.attributes.add(attribute, attIncrease);
     }
 
     @Override

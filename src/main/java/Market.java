@@ -1,6 +1,6 @@
 public class Market extends ReachableTile {
     private Inventory stock;
-    public Market(MarketStock stock) {
+    public Market(Inventory stock) {
         this.type = ColorScheme.ANSI_GREEN + "M" + ColorScheme.ANSI_RESET;
         this.stock = stock;
     }

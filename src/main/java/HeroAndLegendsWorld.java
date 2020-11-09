@@ -2,8 +2,8 @@ public class HeroAndLegendsWorld extends Grid {
     private Player player;
     private int playerPositionX;
     private int playerPositionY;
-    private MarketStock stock;
-    public HeroAndLegendsWorld(int size, Player player, MarketStock stock) {
+    private Inventory stock;
+    public HeroAndLegendsWorld(int size, Player player, Inventory stock) {
         super(size);
         this.player = player;
         this.stock = stock;

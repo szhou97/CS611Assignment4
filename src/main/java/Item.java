@@ -2,18 +2,18 @@ import java.util.ArrayList;
 
 public abstract class Item {
     private final String name;
-    private final int price;
-    private final int minLevel;
-    protected final ArrayList<String> attNames;
-    protected final Attributes attributes;
+    protected ArrayList<String> attNames;
+    protected Attributes attributes;
     protected int availableNumbers;
     public Item(String name, int price, int minLevel) {
         this.name = name;
-        this.price = price;
-        this.minLevel = minLevel;
         this.availableNumbers = -1;
         this.attributes = new Attributes();
         this.attNames = new ArrayList<String>();
+        this.attributes.add("price", price);
+        this.attributes.add("minimum_level", minLevel);
+        this.attNames.add("price");
+        this.attNames.add("minimum_level");
     }
 
     public void setAvailableNumbers(int number) {
@@ -25,11 +25,11 @@ public abstract class Item {
     }
 
     public int getPrice() {
-        return this.price;
+        return this.attributes.get("price");
     }
 
     public int getMinLevel() {
-        return this.minLevel;
+        return this.attributes.get("minimum_level");
     }
 
     public String toString() {

@@ -1,23 +1,20 @@
 public class GameInit {
-    private final String[] itemFiles = {
-        "/src/main/resources/Armory.txt", 
-        "/src/main/resources/Potions.txt",
-        "/src/main/resources/Weaponry.txt",
-        "/src/main/resources/IceSpells.txt",
-        "/src/main/resources/FireSpells.txt",
-        "/src/main/resources/LightningSpells.txt"
-    };
-    private GameInit() {
+    private final String[] weaponFiles = {"../resources/Weaponry.txt"};
+    private final String[] armorFiles = {"../resources/Armory.txt"};
+    private final String[] potionFiles = {"../resources/Potions.txt"};
+    private final String[] spellFiles = {
+        "../resources/IceSpells.txt",
+        "../resources/FireSpells.txt",
+        "../resources/LightningSpells.txt"};
+    private final String[] heroFiles = {"../resources/Warriors.txt"};
+    public GameInit() {
 
     }
     public void run() {
-        Player player = new Player();
-        Grid h = new HeroAndLegendsWorld(11, player);
-        MainController ps = new MainController(h);
-        Inventory stock = new MarketStock(itemFiles);
-        while(true) {
-            ps.changePositions();
-            h.printGrid();
-        }
+        FileScanner fs = new FileScanner(weaponFiles, armorFiles, 
+                                        potionFiles, spellFiles, 
+                                        null, null);
+        
+        fs.populateStock();
     }
 }

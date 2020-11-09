@@ -1,18 +1,19 @@
 public class Weapon extends Item {
-    private final int damage;
-    private final int hand;
     public Weapon(String name, int price, int minLevel, int damage, int hand) {
         super(name, price, minLevel);
-        this.damage = damage;
-        this.hand = hand;
+        this.attributes.add("damage", damage);
+        this.attributes.add("hand", hand);
+        this.attNames.add("damage");
+        this.attNames.add("hand");
+
     }
 
     public int getBaseDamage() {
-        return this.damage;
+        return this.attributes.get("damage");
     }
 
     public int getNumberHands() {
-        return this.hand;
+        return this.attributes.get("hand");
     }
     
 }

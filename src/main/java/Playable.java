@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+
 public interface Playable {
     void viewInventory();
     void wieldWeapon();
