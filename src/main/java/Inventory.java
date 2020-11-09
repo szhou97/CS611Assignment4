@@ -14,7 +14,9 @@ public class Inventory {
 
     public void printInventory() {
         System.out.println("Number of weapons: " + this.weapons.size()
-                            + "Number of armors: " + this.armors.size());
+                            + "\nNumber of armors: " + this.armors.size()
+                            + "\nNumber of potions: " + this.potions.size()
+                            + "\nNumber of spells: " + this.spells.size());
     }
 
     public Item get(int index, int itemNumber) {

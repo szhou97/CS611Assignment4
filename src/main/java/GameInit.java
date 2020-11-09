@@ -5,17 +5,28 @@ public class GameInit {
     private final String[] spellFiles = {
         "../resources/IceSpells.txt",
         "../resources/FireSpells.txt",
-        "../resources/LightningSpells.txt"};
-    private final String[] heroFiles = {"../resources/Warriors.txt"};
+        "../resources/LightningSpells.txt"
+    };
+    private final String[] heroFiles = {
+        "../resources/Warriors.txt",
+        "../resources/Sorcerers.txt",
+        "../resources/Paladins.txt"
+    };
+    private final String[] monsterFiles = {
+        "../resources/Exoskeletons.txt",
+        "../resources/Dragons.txt",
+        "../resources/Spirits.txt"
+    };
     public GameInit() {
 
     }
     public void run() {
         FileScanner fs = new FileScanner(weaponFiles, armorFiles, 
                                         potionFiles, spellFiles, 
-                                        null, null);
+                                        heroFiles, monsterFiles);
         
-        fs.populateStock();
-        fs.getStock().printInventory();
+        fs.populateStock().printInventory();
+        fs.populateHeroPool().printCharacters();
+        fs.populateMonsterPool().printCharacters();
     }
 }
