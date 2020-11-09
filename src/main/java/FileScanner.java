@@ -72,7 +72,7 @@ public class FileScanner {
                         case "potion":
                             int attIncrease = Integer.parseInt(splitString[3]);
                             String attribute = splitString[4];
-                            Item potion = new Potion(name, price, minLevel, attIncrease, attribute)
+                            Item potion = new Potion(name, price, minLevel, attIncrease, attribute);
                             this.stock.addPotion(potion);
                             break;
                         case "spell":
