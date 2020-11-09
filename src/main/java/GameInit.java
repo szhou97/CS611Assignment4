@@ -16,5 +16,6 @@ public class GameInit {
                                         null, null);
         
         fs.populateStock();
+        fs.getStock().printInventory();
     }
 }

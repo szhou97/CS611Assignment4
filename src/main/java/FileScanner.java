@@ -49,35 +49,41 @@ public class FileScanner {
         return lines;
     }
 
-    private void stockWeapon(String[] weapons) {
-        for (int i = 1; i < weapons.length; i++) {
-            if (weapons[i] != null) {
-                String[] splitString = weapons[i].split(" ");
+    private void stockItems(String[] lines, String type) {
+        for (int i = 1; i < lines.length; i++) {
+            if (lines[i] != null) {
+                String[] splitString = lines[i].split("\\s+");
                 try {
                     String name = splitString[0].trim();
                     int price = Integer.parseInt(splitString[1]);
                     int minLevel = Integer.parseInt(splitString[2]);
-                    int damage = Integer.parseInt(splitString[3]);
-                    int hand = Integer.parseInt(splitString[4]);
-                    Item weapon = new Weapon(name, price, minLevel, damage, hand);
-                    this.stock.addWeapon(weapon);
+                    switch(type) {
+                        case "weapon":
+                            int damage = Integer.parseInt(splitString[3]);
+                            int hand = Integer.parseInt(splitString[4]);
+                            Item weapon = new Weapon(name, price, minLevel, damage, hand);
+                            this.stock.addWeapon(weapon);
+                            break;
+                        case "armor":
+                            int damageRedux = Integer.parseInt(splitString[3]);
+                            Item armor = new Armor(name, price, minLevel, damageRedux);
+                            this.stock.addArmor(armor);
+                            break;
+                        case "potion":
+                            int attIncrease = Integer.parseInt(splitString[3]);
+                            String attribute = splitString[4];
+                            Item potion = new Potion(name, price, minLevel, attIncrease, attribute)
+                            this.stock.addPotion(potion);
+                            break;
+                        case "spell":
+                            break;
+                    }
+                    
                 } catch (NumberFormatException nfe) {
-                    System.out.println("Error casting string to integer")
+                    System.out.println("Error casting string to integer");
                 }
             }
         }
-    }
-
-    private void stockArmor(String[] armors) {
-        
-    }
-
-    private void stockPotion(String[] potions) {
-
-    }
-
-    private void stockSpell(String[] spells) {
-
     }
 
 
@@ -88,13 +94,15 @@ public class FileScanner {
         File[] spells = this.createFiles(this.spellFiles);
         try {
             String[] weaponLines = this.readFileLines(weapons);
-            this.stockWeapon(weaponLines);
+            this.stockItems(weaponLines, "weapon");
+
             String[] armorLines = this.readFileLines(armors);
-            this.stockArmor(armorLines);
+            this.stockItems(armorLines, "armor");
+
             String[] potionLines = this.readFileLines(potions);
-            this.stockPotion(potionLines);
+            this.stockItems(potionLines, "potion");
             String[] spellLines = this.readFileLines(spells);
-            this.stockSpell(spellLines);
+            this.stockItems(spellLines, "spell");
         } catch (FileNotFoundException fne) {
             System.out.println("File does not exist!!!");
         }
@@ -106,5 +114,9 @@ public class FileScanner {
 
     public MonsterPool scanMonsters() {
         return this.monsters;
+    }
+
+    public Inventory getStock() {
+        return this.stock;
     }
 }
