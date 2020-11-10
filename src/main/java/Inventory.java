@@ -1,41 +1,40 @@
-import java.util.ArrayList;
+import java.lang.ProcessBuilder.Redirect.Type;
+import java.util.Hashtable;
 
-public class Inventory {
-    protected ArrayList<Item> weapons;
-    protected ArrayList<Item> armors;
-    protected ArrayList<Item> potions;
-    protected ArrayList<Item> spells;
+public abstract class Inventory {
+    protected final String[] types = {
+        "weaponry", "armory", "potions", "spells"
+    };
+    protected Hashtable<String, ElementCollection> inventory;
     public Inventory() {
-        this.weapons = new ArrayList<Item>();
-        this.armors = new ArrayList<Item>();
-        this.potions = new ArrayList<Item>();
-        this.spells = new ArrayList<Item>();
+        this.inventory = new Hashtable<String, ElementCollection>();
+    }
+
+    protected void init() {
+        for (String type : this.types) {
+            this.inventory.put(type, new ElementCollection());
+        }
     }
 
     public void printInventory() {
-        System.out.println("Number of weapons: " + this.weapons.size()
-                            + "\nNumber of armors: " + this.armors.size()
-                            + "\nNumber of potions: " + this.potions.size()
-                            + "\nNumber of spells: " + this.spells.size());
-    }
-
-    public Item get(int index, int itemNumber) {
-        return null;
-    }
-
-    public void addWeapon(Item weapon) {
-        this.weapons.add(weapon);
-    }
-
-    public void addArmor(Item armor) {
-        this.armors.add(armor);
-    }
-
-    public void addPotion(Item potion) {
-        this.potions.add(potion);
-    }
-
-    public void addSpell(Item spell) {
-        this.spells.add(spell);
+        for (String type : types) {
+            String format = null;
+            String bracket = TypeInfo.ITEM_BRACKET;
+            switch (type) {
+                case "weaponry":
+                    format = TypeInfo.WEAPON_FORMAT;
+                    break;
+                case "armory":
+                    format = TypeInfo.ARMOR_FORMAT;
+                    break;
+                case "potions":
+                    format = TypeInfo.POTION_FORMAT;
+                    break;
+                case "spells":
+                    format = TypeInfo.SPELL_FORMAT;
+                    break;
+            }
+            this.inventory.get(type).printElements(format, bracket);
+        }
     }
 }

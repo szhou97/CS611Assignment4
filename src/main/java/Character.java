@@ -1,28 +1,18 @@
-public abstract class Character {
-    private final String name;
-    private final String type;
-    protected Attributes attributes;
+public abstract class Character extends Element {
+    private final int level;
+    private final int health;
     public Character(String type, String name, int level, int health) {
-        this.name = name;
-        this.type = type;
+        super(type, name);
         this.attributes = new Attributes();
-        this.attributes.add("level", level);
-        this.attributes.add("health", health);
-    }
-
-    public String getType() {
-        return this.type;
-    }
-    
-    public String getName() {
-        return this.name;
+        this.level = level;
+        this.health = health;
     }
 
     public int getLevel() {
-        return this.attributes.get("level");
+        return this.level;
     }
 
     public int getHealth() {
-        return this.attributes.get("health");
+        return this.health;
     }
 }

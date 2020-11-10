@@ -1,3 +1,5 @@
+import java.lang.ProcessBuilder.Redirect.Type;
+
 public class GameInit {
     private final String[] weaponFiles = {"../resources/Weaponry.txt"};
     private final String[] armorFiles = {"../resources/Armory.txt"};
@@ -26,7 +28,5 @@ public class GameInit {
                                         heroFiles, monsterFiles);
         
         fs.populateStock().printInventory();
-        fs.populateHeroPool().printCharacters();
-        fs.populateMonsterPool().printCharacters();
     }
 }

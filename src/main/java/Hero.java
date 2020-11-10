@@ -7,8 +7,10 @@ public class Hero extends Character implements Playable{
                 int wealth, int experience) {
 
         super(type, name, level, health);
+        this.attributes.add("mana", mana);
         this.attributes.add("strength", strength);
         this.attributes.add("agility", agility);
+        this.attributes.add("dexterity", dexterity);
         this.attributes.add("wealth", wealth);
         this.attributes.add("experience", experience);
         this.inventory = new PlayerInventory();
@@ -43,5 +45,4 @@ public class Hero extends Character implements Playable{
         // TODO Auto-generated method stub
 
     }
-
 }

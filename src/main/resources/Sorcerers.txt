@@ -1,4 +1,4 @@
-Name/mana/strength/agility/dexterity/starting money/starting experience
+Name/mana/strength/agility/dexterity/wealth/experience
 Rillifane_Rallathil     1300    750     450     500     2500    9
 Segojan_Earthcaller     900     800     500     650     2500    5
 Reign_Havoc             800     800     800     800     2500    8

@@ -1,9 +1,12 @@
 public class Potion extends Item implements Comsumable {
-    public Potion(String name, int price, int minLevel, 
+    private String name;
+    private String attribute;
+    public Potion(String type, String name, int price, int minLevel, 
                         int attIncrease, String attribute) {
-        super(name, price, minLevel);
-        this.attNames.add(attribute);
+        super(type, name, price, minLevel);
         this.attributes.add(attribute, attIncrease);
+        this.name = name;
+        this.attribute = attribute;
     }
 
     @Override
@@ -11,4 +14,15 @@ public class Potion extends Item implements Comsumable {
         this.availableNumbers--;
     }
     
+    @Override
+    public String[] getAttributes() {
+        String[] attributes = this.attributes.getAttributes();
+        String[] result = new String[attributes.length + 2];
+        result[0] = this.name;
+        result[attributes.length + 1] = this.attribute;
+        for (int i = 0; i < attributes.length; i++) {
+            result[i + 1] = attributes[i];
+        }
+        return result;
+    }
 }

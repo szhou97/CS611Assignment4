@@ -1,10 +1,8 @@
 public class Weapon extends Item {
-    public Weapon(String name, int price, int minLevel, int damage, int hand) {
-        super(name, price, minLevel);
+    public Weapon(String type, String name, int price, int minLevel, int damage, int hand) {
+        super(type, name, price, minLevel);
         this.attributes.add("damage", damage);
         this.attributes.add("hand", hand);
-        this.attNames.add("damage");
-        this.attNames.add("hand");
 
     }
 

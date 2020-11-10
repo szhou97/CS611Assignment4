@@ -3,9 +3,6 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class FileScanner {
-    private Inventory stock;
-    private HeroPool heros;
-    private MonsterPool monsters;
     private String[] weaponFiles;
     private String[] armorFiles;
     private String[] potionFiles;
@@ -22,9 +19,6 @@ public class FileScanner {
         this.spellFiles = spellFiles;
         this.heroFiles = heroFiles;
         this.monsterFiles = monsterFiles;
-        this.heros = new HeroPool();
-        this.monsters = new MonsterPool();
-        this.stock = new Inventory();
     }
 
     private String fileName(String filePath) {
@@ -32,10 +26,6 @@ public class FileScanner {
         String fileName = strSplit[strSplit.length - 1].replace(".txt", "");
         fileName = fileName.toLowerCase();
         return fileName;
-    }
-
-    private String[] splitLine(String line) {
-        return line.split("\\s+");
     }
 
     private String[] readFileLines(String filePath) {
@@ -55,35 +45,39 @@ public class FileScanner {
         return lines;
     }
 
-    private void stockItem(String[] splitString, String fileName) {
+    private void addItem(ElementCollection collection, 
+                    String[] splitString, String fileName) {
         try {
             String name = splitString[0].trim();
             int price = Integer.parseInt(splitString[1]);
             int minLevel = Integer.parseInt(splitString[2]);
             int damage = Integer.parseInt(splitString[3]);
-
             if (fileName.contains("weaponry")) {
                 int hand = Integer.parseInt(splitString[4]);
-                Item weapon = new Weapon(name, price, minLevel, damage, hand);
-                this.stock.addWeapon(weapon);
+                Item weapon = new Weapon(fileName, name, price, minLevel, damage, hand);
+                collection.add(weapon);;
             } else if (fileName.contains("armory")) {
-                Item armor = new Armor(name, price, minLevel, damage);
-                this.stock.addArmor(armor);
+                Item armor = new Armor(fileName, name, price, minLevel, damage);
+                collection.add(armor);
             } else if (fileName.contains("potions")) {
                 String attribute = splitString[4];
-                Item potion = new Potion(name, price, minLevel, damage, attribute);
-                this.stock.addPotion(potion);
+                Item potion = new Potion(fileName, name, price, minLevel, damage, attribute);
+                collection.add(potion);
             } else if (fileName.contains("spell")) {
                 int manaCost = Integer.parseInt(splitString[4]);
-                Item spell = new Spell(name, price, minLevel, damage, manaCost, fileName);
-                this.stock.addSpell(spell);
+                Item spell = new Spell(fileName, name, price, minLevel, damage, manaCost);
+                collection.add(spell);
             }
         } catch (NumberFormatException nfe) {
+            for (String str : splitString) {
+                System.out.println(str);
+            }
             System.out.println("Error casting string to integer");
         }
     }
 
-    private void addCharacter(String[] splitString, String fileName) {
+    private void addCharacter(ElementCollection collection, 
+                    String[] splitString, String fileName) {
         try {
             String name = splitString[0].trim();
             if (splitString.length == 7) {
@@ -95,7 +89,7 @@ public class FileScanner {
                 int exp = Integer.parseInt(splitString[6]);
                 Character hero = new Hero(fileName, name, 1, 100, mana, strength, 
                                         agility, dexterity, wealth, exp);
-                this.heros.addCharacter(hero);
+                collection.add(hero);
             } else if (splitString.length == 5) {
                 int level = Integer.parseInt(splitString[1]);
                 int damage = Integer.parseInt(splitString[2]);
@@ -103,7 +97,7 @@ public class FileScanner {
                 int dodgeChance = Integer.parseInt(splitString[4]);
                 Character monster = new Monster(fileName, name, level, 100, damage, 
                                         defense, dodgeChance);
-                this.monsters.addCharacter(monster);
+                collection.add(monster);
             }
             
         } catch (NumberFormatException nfe) {
@@ -111,43 +105,60 @@ public class FileScanner {
         }
     }
 
-    private void processFiles(String[] filePaths, String objectType) {
+    private void addElement(ElementCollection collection, 
+                    String[] splitString, String fileName,
+                    String objectType) {
+        switch(objectType) {
+            case "item":
+                this.addItem(collection, splitString, fileName);
+                break;
+            case "character":
+                this.addCharacter(collection, splitString, fileName);
+                break;
+        }
+        
+    }
+
+    private ElementCollection processFiles(String[] filePaths, String objectType) {
+        ElementCollection collection = new ElementCollection();
+        int fileNumber = 0;
         for (String filePath : filePaths) {
             String[] lines = this.readFileLines(filePath);
             String fileName = this.fileName(filePath);
+            collection.addType(fileName);
             for (String line : lines) {
-                if (line == lines[0]) continue;
-                if (line != null) {
-                    String[] splitLine = this.splitLine(line);
-                    switch(objectType) {
-                        case "item":
-                            this.stockItem(splitLine, fileName);
-                            break;
-                        case "character":
-                            this.addCharacter(splitLine, fileName);
-                            break;
+                if (line == lines[0]) {
+                    if (fileNumber == 0) {
+                        collection.setCategories(line.split("/"));
                     }
+                    continue;
                 }
                 
+                if (line != null) {
+                    //System.out.println(line);
+                    String[] splitLine = line.split("\\s+");
+                    this.addElement(collection, splitLine, fileName, objectType);
+                }
             }
+            fileNumber++;
         }
+        return collection;
     }
     
     public Inventory populateStock() {
-        this.processFiles(this.weaponFiles, "item");
-        this.processFiles(this.armorFiles, "item");
-        this.processFiles(this.potionFiles, "item");
-        this.processFiles(this.spellFiles, "item");
-        return this.stock;
+        ElementCollection weapons = this.processFiles(this.weaponFiles, "item");
+        ElementCollection armors = this.processFiles(this.armorFiles, "item");
+        ElementCollection potions = this.processFiles(this.potionFiles, "item");
+        ElementCollection spells = this.processFiles(this.spellFiles, "item");
+        Inventory stock = new MarketInventory(weapons, armors, potions, spells);
+        return stock;
     }
 
-    public HeroPool populateHeroPool() {
-        this.processFiles(this.heroFiles, "character");
-        return this.heros;
+    public ElementCollection populateHeroPool() {
+        return this.processFiles(this.heroFiles, "character");
     }
 
-    public MonsterPool populateMonsterPool() {
-        this.processFiles(this.monsterFiles, "character");
-        return this.monsters;
+    public ElementCollection populateMonsterPool() {
+        return this.processFiles(this.monsterFiles, "character");
     }
 }

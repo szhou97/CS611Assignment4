@@ -1,4 +1,4 @@
-Name/mana/strength/agility/dexterity/starting money/starting experience
+Name/mana/strength/agility/dexterity/wealth/experience
 Solonor_Thelandira   300     750     650     700     2500    7
 Sehanine_Moonbow     300     750     700     700     2500    7
 Skoraeus_Stonebones  250     650     600     350     2500    4

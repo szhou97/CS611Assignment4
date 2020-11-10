@@ -19,13 +19,12 @@ public class Attributes {
     }
 
 
-    public int[] getAttributes() {
-        int[] result = new int[this.attNames.size()];
+    public String[] getAttributes() {
+        String[] result = new String[this.attNames.size()];
         for (int i = 0; i < this.attNames.size(); i++) {
             String key = this.attNames.get(i);
-            result[i] = this.attributes.get(key);
+            result[i] = Integer.toString(this.attributes.get(key));
         }
         return result;
     }
-
 }

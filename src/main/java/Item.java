@@ -1,27 +1,14 @@
-import java.util.ArrayList;
-
-public abstract class Item {
-    private final String name;
-    protected ArrayList<String> attNames;
-    protected Attributes attributes;
+public abstract class Item extends Element {
     protected int availableNumbers;
-    public Item(String name, int price, int minLevel) {
-        this.name = name;
+    public Item(String type, String name, int price, int minLevel) {
+        super(type, name);
         this.availableNumbers = -1;
-        this.attributes = new Attributes();
-        this.attNames = new ArrayList<String>();
         this.attributes.add("price", price);
         this.attributes.add("minimum_level", minLevel);
-        this.attNames.add("price");
-        this.attNames.add("minimum_level");
     }
 
     public void setAvailableNumbers(int number) {
         this.availableNumbers = number;
-    }
-    
-	public String getName() {
-        return this.name;
     }
 
     public int getPrice() {
@@ -30,9 +17,5 @@ public abstract class Item {
 
     public int getMinLevel() {
         return this.attributes.get("minimum_level");
-    }
-
-    public String toString() {
-        return null;
     }
 }

@@ -17,9 +17,6 @@ public class Market extends ReachableTile {
         this.stock.printInventory();
     }
 
-    public Item purchase(int index, int itemNumber) {
-        return this.stock.get(index, itemNumber);
-    }
 
     @Override
     boolean reachable() {
