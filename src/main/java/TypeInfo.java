@@ -3,15 +3,8 @@ public class TypeInfo {
         "%-20s%-5s%-9s%-8s%-10s%-7s%-10s\n";
     
     public final static String MONSTER_FORMAT = 
-        "%-15s%-6s%-7s%-7s%-8s%-12s\n";
-
-    public final static String CHARACTER_BRACKET = 
-        ColorScheme.ANSI_RED 
-        + "*********************************************" 
-        + "********************************************"
-        + ColorScheme.ANSI_RESET;
+        "%-15s%-6s%-7s%-9s%-20s\n";
     
-   
     public final static String WEAPON_FORMAT = 
         "%-8s%-6s%-7s%-8s%-16s\n";
 
@@ -30,4 +23,76 @@ public class TypeInfo {
         + "********************************************"
         + ColorScheme.ANSI_RESET;    
 
+    public final static String HERO_BRACKET = 
+        ColorScheme.ANSI_BLUE 
+        + "*********************************************" 
+        + "********************************************"
+        + ColorScheme.ANSI_RESET;
+
+    public final static String MONSTER_BRACKET = 
+        ColorScheme.ANSI_BLUE 
+        + "*********************************************" 
+        + "********************************************"
+        + ColorScheme.ANSI_RESET;
+
+    
+    public final static String GRID_INFO = "\n\t"
+        + ColorScheme.ANSI_RED
+        + "X"
+        + ColorScheme.ANSI_RESET
+        + ": Current location    "
+        + ColorScheme.ANSI_GREEN
+        + "M"
+        + ColorScheme.ANSI_RESET
+        + ": Market    "
+        + "&: Unreachable space";
+        
+    public static String getFormat(String type) {
+        String format = "";
+        switch (type) {
+            case "weaponry":
+                format = WEAPON_FORMAT;
+                break;
+            case "armory":
+                format = ARMOR_FORMAT;
+                break;
+            case "potions":
+                format = POTION_FORMAT;
+                break;
+            case "icespells":
+                format = SPELL_FORMAT;
+                break;
+            case "firespells":
+                format = SPELL_FORMAT;
+                break;
+            case "lightningspells":
+                format = SPELL_FORMAT;
+                break;
+            case "warriors":
+                format = HERO_FORMAT;
+                break;
+            case "sorcerers":
+                format = HERO_FORMAT;
+                break;
+            case "paladins":
+                format = HERO_FORMAT;
+                break;
+            case "hero":
+                format = HERO_FORMAT;
+                break;
+            case "dragons":
+                format = MONSTER_FORMAT;
+                break;
+            case "exoskeletons":
+                format = MONSTER_FORMAT;
+                break;
+            case "spirits":
+                format = MONSTER_FORMAT;
+                break;
+            case "monster":
+                format = MONSTER_FORMAT;
+                break;
+        }
+        return format;
+    }
 }

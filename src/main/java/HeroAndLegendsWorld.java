@@ -3,10 +3,13 @@ public class HeroAndLegendsWorld extends Grid {
     private int playerPositionX;
     private int playerPositionY;
     private Inventory stock;
-    public HeroAndLegendsWorld(int size, Player player, Inventory stock) {
+    private ElementCollection monsters;
+    public HeroAndLegendsWorld(int size, Player player, 
+                        Inventory stock, ElementCollection monsters) {
         super(size);
         this.player = player;
         this.stock = stock;
+        this.monsters = monsters;
         this.populateGrid();
         this.spawn();
     }
@@ -15,10 +18,10 @@ public class HeroAndLegendsWorld extends Grid {
     public void populateGrid() {
         for (int i = 0; i < this.getSize(); i++) {
             for (int j = 0; j < this.getSize(); j++) {
-                if (ChanceGenerator.generateChance(90)) {
-                    this.grid[i][j] = new CommonTile();
+                if (ChanceGenerator.generateChance(80)) {
+                    this.grid[i][j] = new CommonTile(monsters);
                 } else {
-                    if (ChanceGenerator.generateChance(50)) {
+                    if (ChanceGenerator.generateChance(20)) {
                         this.grid[i][j] = new Market(stock);
                     } else {
                         this.grid[i][j] = new UnreachableTile();
@@ -57,7 +60,7 @@ public class HeroAndLegendsWorld extends Grid {
                 return false;
             } else {
                 ((ReachableTile) this.grid[playerPositionY][playerPositionX]).leave();
-                ((ReachableTile) this.grid[y][x]).arrive(player);
+                ((ReachableTile) this.grid[y][x]).arrive(player, false);
                 playerPositionY = y;
                 playerPositionX = x;
                 return true;
@@ -71,11 +74,11 @@ public class HeroAndLegendsWorld extends Grid {
         while(!valid) {
             int x = ChanceGenerator.generateRandomNumber(this.getSize());
             int y = ChanceGenerator.generateRandomNumber(this.getSize());
-            if (this.grid[y][x].getClass() == Market.class) {
+            if (this.grid[y][x].getClass() == CommonTile.class) {
                 valid = true;
                 this.playerPositionX = x;
                 this.playerPositionY = y;
-                ((ReachableTile) this.grid[y][x]).arrive(player);
+                ((ReachableTile) this.grid[y][x]).arrive(player, true);
             }
         }
     }

@@ -1,6 +1,6 @@
 public class Armor extends Item {
-    public Armor(String type, String name, int price, int minLevel, int damageRedux) {
-        super(type, name, price, minLevel);
+    public Armor(String[] categories, String type, String name, int price, int minLevel, int damageRedux) {
+        super(categories, type, name, price, minLevel);
         this.attributes.add("damage_reduction", damageRedux);
     }
 

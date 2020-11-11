@@ -27,5 +27,7 @@ public abstract class Grid {
         for (int k = 0; k < this.size; k++) 
             System.out.print("=======");
         System.out.print("\n");
+
+        System.out.println(TypeInfo.GRID_INFO);
     }
 }

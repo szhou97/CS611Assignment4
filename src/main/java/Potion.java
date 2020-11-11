@@ -1,9 +1,9 @@
 public class Potion extends Item implements Comsumable {
     private String name;
     private String attribute;
-    public Potion(String type, String name, int price, int minLevel, 
+    public Potion(String[] categories, String type, String name, int price, int minLevel, 
                         int attIncrease, String attribute) {
-        super(type, name, price, minLevel);
+        super(categories, type, name, price, minLevel);
         this.attributes.add(attribute, attIncrease);
         this.name = name;
         this.attribute = attribute;

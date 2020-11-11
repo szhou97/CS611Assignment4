@@ -1,7 +1,7 @@
 public abstract class Item extends Element {
     protected int availableNumbers;
-    public Item(String type, String name, int price, int minLevel) {
-        super(type, name);
+    public Item(String[] categories, String type, String name, int price, int minLevel) {
+        super(categories, type, name);
         this.availableNumbers = -1;
         this.attributes.add("price", price);
         this.attributes.add("minimum_level", minLevel);

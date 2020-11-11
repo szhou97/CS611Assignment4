@@ -46,7 +46,8 @@ public class FileScanner {
     }
 
     private void addItem(ElementCollection collection, 
-                    String[] splitString, String fileName) {
+                    String[] splitString, String fileName,
+                    String[] categories) {
         try {
             String name = splitString[0].trim();
             int price = Integer.parseInt(splitString[1]);
@@ -54,18 +55,18 @@ public class FileScanner {
             int damage = Integer.parseInt(splitString[3]);
             if (fileName.contains("weaponry")) {
                 int hand = Integer.parseInt(splitString[4]);
-                Item weapon = new Weapon(fileName, name, price, minLevel, damage, hand);
+                Item weapon = new Weapon(categories, fileName, name, price, minLevel, damage, hand);
                 collection.add(weapon);;
             } else if (fileName.contains("armory")) {
-                Item armor = new Armor(fileName, name, price, minLevel, damage);
+                Item armor = new Armor(categories, fileName, name, price, minLevel, damage);
                 collection.add(armor);
             } else if (fileName.contains("potions")) {
                 String attribute = splitString[4];
-                Item potion = new Potion(fileName, name, price, minLevel, damage, attribute);
+                Item potion = new Potion(categories, fileName, name, price, minLevel, damage, attribute);
                 collection.add(potion);
             } else if (fileName.contains("spell")) {
                 int manaCost = Integer.parseInt(splitString[4]);
-                Item spell = new Spell(fileName, name, price, minLevel, damage, manaCost);
+                Item spell = new Spell(categories, fileName, name, price, minLevel, damage, manaCost);
                 collection.add(spell);
             }
         } catch (NumberFormatException nfe) {
@@ -77,7 +78,8 @@ public class FileScanner {
     }
 
     private void addCharacter(ElementCollection collection, 
-                    String[] splitString, String fileName) {
+                    String[] splitString, String fileName,
+                    String[] categories) {
         try {
             String name = splitString[0].trim();
             if (splitString.length == 7) {
@@ -87,7 +89,7 @@ public class FileScanner {
                 int dexterity = Integer.parseInt(splitString[4]);
                 int wealth = Integer.parseInt(splitString[5]);
                 int exp = Integer.parseInt(splitString[6]);
-                Character hero = new Hero(fileName, name, 1, 100, mana, strength, 
+                Character hero = new Hero(categories, fileName, name, 1, 100, mana, strength, 
                                         agility, dexterity, wealth, exp);
                 collection.add(hero);
             } else if (splitString.length == 5) {
@@ -95,7 +97,8 @@ public class FileScanner {
                 int damage = Integer.parseInt(splitString[2]);
                 int defense = Integer.parseInt(splitString[3]);
                 int dodgeChance = Integer.parseInt(splitString[4]);
-                Character monster = new Monster(fileName, name, level, 100, damage, 
+                System.out.println(dodgeChance);
+                Character monster = new Monster(categories, fileName, name, level, 100, damage, 
                                         defense, dodgeChance);
                 collection.add(monster);
             }
@@ -107,13 +110,13 @@ public class FileScanner {
 
     private void addElement(ElementCollection collection, 
                     String[] splitString, String fileName,
-                    String objectType) {
+                    String objectType, String[] categories) {
         switch(objectType) {
             case "item":
-                this.addItem(collection, splitString, fileName);
+                this.addItem(collection, splitString, fileName, categories);
                 break;
             case "character":
-                this.addCharacter(collection, splitString, fileName);
+                this.addCharacter(collection, splitString, fileName, categories);
                 break;
         }
         
@@ -121,26 +124,21 @@ public class FileScanner {
 
     private ElementCollection processFiles(String[] filePaths, String objectType) {
         ElementCollection collection = new ElementCollection();
-        int fileNumber = 0;
         for (String filePath : filePaths) {
             String[] lines = this.readFileLines(filePath);
             String fileName = this.fileName(filePath);
-            collection.addType(fileName);
+            String firstLine = lines[0];
+            String[] categories = firstLine.split("/");
+            
             for (String line : lines) {
                 if (line == lines[0]) {
-                    if (fileNumber == 0) {
-                        collection.setCategories(line.split("/"));
-                    }
                     continue;
                 }
-                
                 if (line != null) {
-                    //System.out.println(line);
                     String[] splitLine = line.split("\\s+");
-                    this.addElement(collection, splitLine, fileName, objectType);
+                    this.addElement(collection, splitLine, fileName, objectType, categories);
                 }
             }
-            fileNumber++;
         }
         return collection;
     }

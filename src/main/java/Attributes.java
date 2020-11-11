@@ -18,6 +18,9 @@ public class Attributes {
         return this.attributes.get(key);
     }
 
+    public void replace(String key, Integer value) {
+        this.attributes.replace(key, value);
+    }
 
     public String[] getAttributes() {
         String[] result = new String[this.attNames.size()];

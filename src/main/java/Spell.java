@@ -1,7 +1,7 @@
 public class Spell extends Item {
-    public Spell(String type, String name, int price, int minLevel, 
+    public Spell(String[] categories, String type, String name, int price, int minLevel, 
                     int damage, int manaCost) {
-        super(type, name, price, minLevel);
+        super(categories, type, name, price, minLevel);
         this.attributes.add("damage", damage);
         this.attributes.add("mana_cost", manaCost);
     }

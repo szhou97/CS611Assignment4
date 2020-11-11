@@ -6,7 +6,7 @@ public abstract class ReachableTile extends Tile implements Accessible {
     }
 
     @Override
-    public void arrive(Player player) {
+    public void arrive(Player player, boolean firstArrival) {
         this.player = player;
         this.playerExists = true;
         // TODO Auto-generated method stub

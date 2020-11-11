@@ -22,11 +22,30 @@ public class GameInit {
     public GameInit() {
 
     }
-    public void run() {
+    public void initializeGame() {
         FileScanner fs = new FileScanner(weaponFiles, armorFiles, 
                                         potionFiles, spellFiles, 
                                         heroFiles, monsterFiles);
-        
-        fs.populateStock().printInventory();
+        System.out.print(Messages.TITLE);
+        System.out.print(Messages.WELCOME_MESSAGE);
+        System.out.println(Messages.WELCOME_PROMPT);
+        String[] options = {"start", "help"};
+        String selection = Controller.stringSelection(options);
+        System.out.println(selection);
+        if (selection.equals("start")) {
+            PlayerInit pi = new PlayerInit(fs.populateHeroPool());
+            Player player = pi.initPlayer();
+            Grid world = new HeroAndLegendsWorld(10, player, 
+                fs.populateStock(), fs.populateMonsterPool());
+            Controller controller = new Controller(world);
+            this.run(world, controller);
+        }
+    }
+
+    public void run(Grid world, Controller controller) {
+        while(true) {
+            world.printGrid();
+            controller.mainControll();
+        }
     }
 }

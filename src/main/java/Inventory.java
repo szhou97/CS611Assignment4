@@ -1,4 +1,3 @@
-import java.lang.ProcessBuilder.Redirect.Type;
 import java.util.Hashtable;
 
 public abstract class Inventory {
@@ -16,25 +15,33 @@ public abstract class Inventory {
         }
     }
 
+    public ElementCollection getCollection(String type) {
+        return this.inventory.get(type);
+    }
+
+    public String[] getTypes() {
+        return this.types;
+    }
+
+    public void printTypes() {
+        System.out.print("\n\t");
+        int index = 1;
+        for (String type : types) {
+            System.out.print(ColorScheme.ANSI_GREEN);
+            System.out.print(index + ": " + type + "\t");
+            System.out.print(ColorScheme.ANSI_RESET);
+            index++;
+        }
+    }
+
+    public boolean isEmpty(String type) {
+        return this.inventory.get(type).isEmpty();
+    }
+
     public void printInventory() {
         for (String type : types) {
-            String format = null;
             String bracket = TypeInfo.ITEM_BRACKET;
-            switch (type) {
-                case "weaponry":
-                    format = TypeInfo.WEAPON_FORMAT;
-                    break;
-                case "armory":
-                    format = TypeInfo.ARMOR_FORMAT;
-                    break;
-                case "potions":
-                    format = TypeInfo.POTION_FORMAT;
-                    break;
-                case "spells":
-                    format = TypeInfo.SPELL_FORMAT;
-                    break;
-            }
-            this.inventory.get(type).printElements(format, bracket);
+            this.inventory.get(type).printElements(bracket);
         }
     }
 }
