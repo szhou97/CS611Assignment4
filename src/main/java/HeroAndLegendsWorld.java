@@ -74,7 +74,7 @@ public class HeroAndLegendsWorld extends Grid {
         while(!valid) {
             int x = ChanceGenerator.generateRandomNumber(this.getSize());
             int y = ChanceGenerator.generateRandomNumber(this.getSize());
-            if (this.grid[y][x].getClass() == CommonTile.class) {
+            if (this.grid[y][x].getClass() == Market.class) {
                 valid = true;
                 this.playerPositionX = x;
                 this.playerPositionY = y;

@@ -17,5 +17,18 @@ public class Spell extends Item {
     public int reduceAttribute(int baseAttribute) {
         return (int) (baseAttribute * 0.9);
     }
+
+    public String getAffectedAttribute() {
+        String attribute = "";
+        String type = this.getType();
+        if (type.contains("ice")) {
+            attribute = "damage";
+        } else if (type.contains("fire")) {
+            attribute = "defense";
+        } else if (type.contains("lightning")) {
+            attribute = "dodge_chance";
+        }
+        return attribute;
+    }
     
 }

@@ -2,8 +2,15 @@ import java.util.Scanner;
 
 public class Controller {
     private Grid grid;
-    public Controller(Grid grid) {
+    private Player player;
+    public Controller(Player player, Grid grid) {
         this.grid = grid;
+        this.player = player;
+    }
+
+    public static void pressEnter() {
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
     }
 
     public static int intSelection(int min, int max) {
@@ -49,16 +56,41 @@ public class Controller {
     }
 
     public void mainControll() {
-        String [] controls = {"w", "a", "s", "d", "q"};
+        String [] controls = {"w", "a", "s", "d", "q", "h", "i", "help", "e", "u"};
         String input = Controller.stringSelection(controls);
-        if (input.equals("q")) {
-            System.exit(0);
-        } else {
-            grid.updatePosition(input);
+        System.out.print(ColorScheme.ANSI_CYAN);
+        Hero hero = null;
+        switch(input) {
+            case "q":
+                System.out.println("\nGoodbye");
+                System.exit(0);
+                break;
+            case "h":
+                System.out.println("\nSELECTED TO USE A POTION");
+                break;
+            case "i":
+                System.out.println("\nSELECTED TO VIEW A HERO INVENTORY");
+                player.viewHeroInventory();
+                break;
+            case "e":
+                System.out.println("\nEQUIP/UNEQUIP AN ITEM FOR A HERO");
+                hero = player.selectHero();
+                if (hero != null) {
+                    hero.equipAnItem();
+                }
+                break;
+            case "u":
+                System.out.println("\nUSE A POTION FOR A HERO");
+                hero = player.selectHero();
+                if (hero != null) {
+                    hero.usePotion();
+                }
+                player.selectHero().usePotion();
+                break;
+            default:
+                System.out.println("\nPRESS ENTER TO CONTINUE");
+                grid.updatePosition(input);
         }
-    }
-
-    public int battleControl() {
-        return 0;
+        System.out.print(ColorScheme.ANSI_RESET);
     }
 }

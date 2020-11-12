@@ -1,15 +1,11 @@
 import java.util.Hashtable;
 
 public abstract class Inventory {
-    protected final String[] types = {
-        "weaponry", "armory", "potions", "spells"
-    };
     protected Hashtable<String, ElementCollection> inventory;
-    public Inventory() {
+    protected String[] types;
+    public Inventory(String[] types) {
         this.inventory = new Hashtable<String, ElementCollection>();
-    }
-
-    protected void init() {
+        this.types = types;
         for (String type : this.types) {
             this.inventory.put(type, new ElementCollection());
         }
@@ -34,8 +30,14 @@ public abstract class Inventory {
         }
     }
 
-    public boolean isEmpty(String type) {
-        return this.inventory.get(type).isEmpty();
+    public boolean isEmpty() {
+        boolean empty = true;
+        for (String type : types) {
+            empty = this.inventory.get(type).isEmpty();
+            if (!empty) 
+                break;
+        }
+        return empty;
     }
 
     public void printInventory() {

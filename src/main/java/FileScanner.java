@@ -7,8 +7,6 @@ public class FileScanner {
     private String[] armorFiles;
     private String[] potionFiles;
     private String[] spellFiles;
-    private String[] heroFiles;
-    private String[] monsterFiles;
 
     public FileScanner(String[] weaponFiles, String[] armorFiles, 
                         String[] potionFiles, String[] spellFiles,
@@ -17,8 +15,6 @@ public class FileScanner {
         this.armorFiles = armorFiles;
         this.potionFiles = potionFiles;
         this.spellFiles = spellFiles;
-        this.heroFiles = heroFiles;
-        this.monsterFiles = monsterFiles;
     }
 
     private String fileName(String filePath) {
@@ -70,9 +66,6 @@ public class FileScanner {
                 collection.add(spell);
             }
         } catch (NumberFormatException nfe) {
-            for (String str : splitString) {
-                System.out.println(str);
-            }
             System.out.println("Error casting string to integer");
         }
     }
@@ -89,7 +82,7 @@ public class FileScanner {
                 int dexterity = Integer.parseInt(splitString[4]);
                 int wealth = Integer.parseInt(splitString[5]);
                 int exp = Integer.parseInt(splitString[6]);
-                Character hero = new Hero(categories, fileName, name, 1, 100, mana, strength, 
+                Character hero = new Hero(categories, fileName, name, 1, mana, strength, 
                                         agility, dexterity, wealth, exp);
                 collection.add(hero);
             } else if (splitString.length == 5) {
@@ -97,8 +90,7 @@ public class FileScanner {
                 int damage = Integer.parseInt(splitString[2]);
                 int defense = Integer.parseInt(splitString[3]);
                 int dodgeChance = Integer.parseInt(splitString[4]);
-                System.out.println(dodgeChance);
-                Character monster = new Monster(categories, fileName, name, level, 100, damage, 
+                Character monster = new Monster(categories, fileName, name, level, damage, 
                                         defense, dodgeChance);
                 collection.add(monster);
             }
@@ -143,7 +135,7 @@ public class FileScanner {
         return collection;
     }
     
-    public Inventory populateStock() {
+    public Inventory loadItems() {
         ElementCollection weapons = this.processFiles(this.weaponFiles, "item");
         ElementCollection armors = this.processFiles(this.armorFiles, "item");
         ElementCollection potions = this.processFiles(this.potionFiles, "item");
@@ -152,11 +144,18 @@ public class FileScanner {
         return stock;
     }
 
-    public ElementCollection populateHeroPool() {
-        return this.processFiles(this.heroFiles, "character");
-    }
+    public ElementCollection loadCharacters(String[] files) {
+        ElementCollection characters = this.processFiles(files, "character");
+        String[] cat = characters.getCategories();
+        String[] newCat = new String[cat.length + 2];
+        newCat[0] = cat[0];
+        for (int i = 1; i < cat.length; i++) {
+            newCat[i + 2] = cat[i];
+        }
 
-    public ElementCollection populateMonsterPool() {
-        return this.processFiles(this.monsterFiles, "character");
+        newCat[1] = "level";
+        newCat[2] = "health";
+        characters.setCategories(newCat);
+        return characters;
     }
 }

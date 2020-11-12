@@ -11,10 +11,6 @@ public abstract class Item extends Element {
         this.availableNumbers = number;
     }
 
-    public int getPrice() {
-        return this.attributes.get("price");
-    }
-
     public int getMinLevel() {
         return this.attributes.get("minimum_level");
     }

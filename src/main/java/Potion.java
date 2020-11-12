@@ -9,6 +9,13 @@ public class Potion extends Item implements Comsumable {
         this.attribute = attribute;
     }
 
+    public String getAttributeAffected() {
+        return this.attribute;
+    }
+
+    public int getAttributeIncrease() {
+        return this.attributes.get(attribute);
+    }
     @Override
     public void useItem() {
         this.availableNumbers--;

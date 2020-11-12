@@ -1,9 +1,9 @@
 public class TypeInfo {
     public final static String HERO_FORMAT = 
-        "%-20s%-5s%-9s%-8s%-10s%-7s%-10s\n";
+        "%-20s%-6s%-8s%-5s%-10s%-8s%-10s%-8s%-7s\n";
     
     public final static String MONSTER_FORMAT = 
-        "%-15s%-6s%-7s%-9s%-20s\n";
+        "%-15s%-6s%-7s%-9s%-7s%-8s%-8s\n";
     
     public final static String WEAPON_FORMAT = 
         "%-8s%-6s%-7s%-8s%-16s\n";
@@ -35,6 +35,13 @@ public class TypeInfo {
         + "********************************************"
         + ColorScheme.ANSI_RESET;
 
+    public final static String[] ALL_TYPES = {
+        "weaponry", "armory", "potions", "spells"
+    };
+
+    public final static String[] EQUIPABLE_TYPES = {
+        "weaponry", "armory"
+    };
     
     public final static String GRID_INFO = "\n\t"
         + ColorScheme.ANSI_RED

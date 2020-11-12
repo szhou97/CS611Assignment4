@@ -15,6 +15,16 @@ public class ElementCollection {
         this.elements.put(type, new ArrayList<Element>());
     }
 
+    public ArrayList<Element> getAllElements() {
+        ArrayList<Element> list = new ArrayList<Element>();
+        for (String type : types) {
+            for (Element element : this.getElementList(type)) {
+                list.add(element);
+            }
+        }
+        return list;
+    }
+
     public ArrayList<String> getTypes() {
         return this.types;
     }
@@ -54,8 +64,12 @@ public class ElementCollection {
 
     public void remove(Element element) {
         for (String type : this.types) {
-            if (element.getType().equals(type)) {
-                elements.get(type).remove(element);
+            ArrayList<Element> list = elements.get(type);
+            for (Element item : list) {
+                if (item.getName().equals(element.getName())) {
+                    list.remove(item);
+                    break;
+                }
             }
         }
     }
@@ -118,8 +132,8 @@ public class ElementCollection {
     public void printElements(String bracket) {
         System.out.println(bracket);
         if (this.isEmpty()) {
-            System.out.println(ColorScheme.ANSI_GREEN
-                + "Inventory is currently empty"
+            System.out.println(ColorScheme.ANSI_RED
+                + "EMPTY"
                 + ColorScheme.ANSI_RESET);
         } else {
             for (String type : this.types) {
@@ -151,7 +165,15 @@ public class ElementCollection {
         return result;
     }
 
+    private int numItems(String type) {
+        return this.elements.get(type).size();
+    }
+
     public boolean isEmpty() {
-        return types.size() == 0;
+        int result = 0;
+        for (String type : types) {
+            result += this.numItems(type);
+        }
+        return result == 0;
     }
 }

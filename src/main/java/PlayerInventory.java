@@ -1,6 +1,6 @@
 public class PlayerInventory extends Inventory {
-    public PlayerInventory() {
-        this.init();
+    public PlayerInventory(String[] types) {
+        super(types);
     }
 
     public void add(Element element) {

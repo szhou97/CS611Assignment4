@@ -1,37 +1,13 @@
 import java.util.ArrayList;
 
 public class Player {
-    private ArrayList<Hero> heros;
+    private ElementCollection heros;
     public Player() {
-        this.heros = new ArrayList<Hero>();
+        heros = new ElementCollection();
     }
 
-    public ArrayList<Hero> getHeros() {
+    public ElementCollection getHeros() {
         return this.heros;
-    }
-
-    public void printBasicInfo() {
-        System.out.println("                                   "
-            + "Current team members");
-        System.out.println("name" + "\t\t\t\t\t\t" + "type");
-        System.out.println(TypeInfo.HERO_BRACKET);
-        int index = 1;
-        for (Hero hero : heros) {
-            System.out.println(index + ", " + hero.getName() + "\t\t\t\t" + hero.getType());
-            index++;
-        }
-    }
-
-    public void printWealth() {
-        System.out.println("                                   "
-            + "Current team members");
-        System.out.println("name" + "\t\t\t\t\t\t" + "money");
-        System.out.println(TypeInfo.HERO_BRACKET);
-        int index = 1;
-        for(Hero hero : heros) {
-            System.out.println(index + ", " + hero.getName() + "\t\t\t\t$" + hero.getWealth());
-            index++;
-        }
     }
     
     public void addHero(Element hero) { 
@@ -39,18 +15,69 @@ public class Player {
     }
 
     public int getNumHeros() {
-        return this.heros.size();
+        return this.heros.getTotalNumElements();
     }
 
-    public int highestLevel() {
+    public int getHighestLevel() {
+        ArrayList<Element> currentHeros = heros.getAllElements();
         int level = 0;
         int tmp = 0;
-        for (Hero hero : heros) {
-            tmp = hero.getLevel();
+        for (Element hero : currentHeros) {
+            tmp = ((Hero) hero).getAttribute("level");
             if (level < tmp) {
                 level = tmp;
             }
         }
         return level;
+    }
+
+    public void viewHeroInventory() {
+        Hero hero = this.selectHero();
+        hero.getInventory().printInventory();
+    }
+
+    public Hero selectHero() {
+        Query query = new Query();
+        System.out.println(ColorScheme.ANSI_YELLOW
+            + "Select a hero"
+            + ColorScheme.ANSI_RESET);
+        Hero hero = (Hero) query.getItemList(this.heros);
+        return hero;
+    }
+
+    public void printHeros() {
+        this.heros.printElements(TypeInfo.HERO_BRACKET);
+    }
+
+    public void setCategories(String[] categories) {
+        this.heros.setCategories(categories);
+    }
+
+    public void updateHeros(int levelCoins) {
+        ArrayList<String> types = this.heros.getTypes();
+        for (String type : types) {
+            ArrayList<Element> herolist = this.heros.getElementList(type);
+            for (Element element : herolist) {
+                Hero hero = (Hero) element;
+                int level = hero.getAttribute("level");
+                if (hero.getAttribute("health") > 0) {
+                    int exp = hero.getAttribute("experience") + 2;
+                    
+                    int wealth = hero.getAttribute("wealth") + levelCoins;
+                    hero.changeAttribute("experience", exp);
+                    hero.changeAttribute("wealth", wealth);
+                    if ( (exp - hero.getExp()) >= level*10 ) {
+                        System.out.print("\t\tHero " 
+                            + ColorScheme.ANSI_RED
+                            + hero.getName()
+                            + ColorScheme.ANSI_RESET
+                            + " has leveled up!! ");
+                        hero.levelUp();
+                    }
+                } else {
+                    hero.reset();
+                }
+            }
+        }
     }
 }

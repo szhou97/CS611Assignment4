@@ -26,6 +26,9 @@ public class GameInit {
         FileScanner fs = new FileScanner(weaponFiles, armorFiles, 
                                         potionFiles, spellFiles, 
                                         heroFiles, monsterFiles);
+        ElementCollection monsters = fs.loadCharacters(monsterFiles);
+        monsters.printElements(TypeInfo.MONSTER_FORMAT);
+        //System.exit(0);
         System.out.print(Messages.TITLE);
         System.out.print(Messages.WELCOME_MESSAGE);
         System.out.println(Messages.WELCOME_PROMPT);
@@ -33,11 +36,11 @@ public class GameInit {
         String selection = Controller.stringSelection(options);
         System.out.println(selection);
         if (selection.equals("start")) {
-            PlayerInit pi = new PlayerInit(fs.populateHeroPool());
+            PlayerInit pi = new PlayerInit(fs.loadCharacters(heroFiles));
             Player player = pi.initPlayer();
             Grid world = new HeroAndLegendsWorld(10, player, 
-                fs.populateStock(), fs.populateMonsterPool());
-            Controller controller = new Controller(world);
+                fs.loadItems(), fs.loadCharacters(monsterFiles));
+            Controller controller = new Controller(player, world);
             this.run(world, controller);
         }
     }

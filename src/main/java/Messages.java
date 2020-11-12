@@ -20,22 +20,22 @@ public class Messages {
                     + "2. NO"
                     + ColorScheme.ANSI_RESET;
     // Market messages
-    public static final String market = ColorScheme.ANSI_GREEN 
+    public static final String MARKET = ColorScheme.ANSI_GREEN 
         + "\n\n\n                              ==============================\n"
         + "                              #           Market           #\n"
         + "                              ==============================\n\n\n"
         + ColorScheme.ANSI_RESET;
-    public static final String marketWelcome = "                                  "
+    public static final String MARKET_WELCOME = "                                  "
                                         +"Welcome to the Market\n\n\n";
-    public static final String MARKET_SELECTION = "\n\nSelect the hero who will make the transaction" 
+    public static final String HERO_SELECTION = "\n\nSelect the hero" 
                                         + "\nSelect 0 to exit market";
-    public static final String marketSelection1 = "\n\nSelect to 1: buy, 2: sell, 3: view hero inventory" 
+    public static final String MARKET_SELECTION = "\n\nSelect to 1: buy, 2: sell, 3: view hero inventory" 
                                         + "\nSelect 0 to go back to previous menu";
-    public static final String marketSelection2 = "\n\nSelect type of item to buy/sell, "
+    public static final String INVENTORY_TYPE = "\n\nSelect type of item, "
                                         + "\nSelect 0 to go back to previous menu";
-    public static final String marketSelection3 = "\n\nSelect subtype of the select item; "
+    public static final String INVENTORY_SUBTYPE = "\n\nSelect subtype of the select item; "
                                         + "\nSelect 0 to go back to previous menu";
-    public static final String marketSelection4 = "\n\nSelect an item;"
+    public static final String ITEM = "\n\nSelect an item;"
                                         + "\nSelect 0 to go back to previous menu";;
 
     // Battle Message
@@ -44,6 +44,14 @@ public class Messages {
                                         + "Some monsters have appeared!!"
                                         + "                              \n\n\n\n"
                                         + ColorScheme.ANSI_RESET;
+    public static final String MOVE_SELECTION = "Select:"
+        +ColorScheme.ANSI_GREEN + "\n\t'equip'" + ColorScheme.ANSI_RESET + " to equip weapon/armory"
+        +ColorScheme.ANSI_GREEN + "\n\t'attack'" + ColorScheme.ANSI_RESET + " to attack the monster"
+        +ColorScheme.ANSI_GREEN + "\n\t'cast'" + ColorScheme.ANSI_RESET + " to cast a spell"
+        +ColorScheme.ANSI_GREEN + "\n\t'use'" + ColorScheme.ANSI_RESET + " to use a potion";
+    public static final String[] MOVE_OPTIONS = {
+        "attack", "equip", "cast", "use"
+    };
     // 
     
 }

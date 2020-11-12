@@ -1,13 +1,11 @@
 import java.util.ArrayList;
 
 public class CommonTile extends ReachableTile {
-    private ArrayList<Monster> monsters;
     private ElementCollection monsterPool;
-    private Controller controller;
+
     public CommonTile(ElementCollection monsterPool) {
         this.type = " ";
         this.monsterPool = monsterPool;
-        this.monsters = new ArrayList<Monster>();
     }
 
     private ArrayList<Monster> getValidMonsters(int level) {
@@ -17,7 +15,7 @@ public class CommonTile extends ReachableTile {
             ArrayList<Element> list = monsterPool.getElementList(type);
             for (Element element : list) {
                 Monster monster = (Monster) element;
-                if (monster.getLevel() == level) {
+                if (monster.getAttribute("level") == level) {
                     validMonsters.add(monster);
                 }
             }
@@ -25,15 +23,17 @@ public class CommonTile extends ReachableTile {
         return validMonsters;
     }
 
-    private void generateMonsters(int number, int level) {
+    private ElementCollection generateMonsters(int number, int level) {
         ArrayList<Monster> validMonsters = this.getValidMonsters(level);
         if (validMonsters.size() == 0) {
-            return;
+            return null;
         } else {
+            ElementCollection monsters = new ElementCollection();
             for (int i = 0; i < number; i++) {
                 int index = ChanceGenerator.generateRandomNumber(validMonsters.size());
-                this.monsters.add(validMonsters.get(index));
+                monsters.add(validMonsters.get(index));
             }
+            return monsters;
         }
     }
 
@@ -42,11 +42,15 @@ public class CommonTile extends ReachableTile {
         this.player = player;
         this.playerExists = true;
         if (!firstArrival) {
-            if (ChanceGenerator.generateChance(70)) {
-                this.generateMonsters(player.getNumHeros(), player.highestLevel());
-                if (monsters.size() != 0) {
+            if (ChanceGenerator.generateChance(50)) {
+                int numHeros = player.getNumHeros();
+                int highestLevel = player.getHighestLevel();
+                ElementCollection monsters = this.generateMonsters(numHeros, highestLevel);
+                monsters.setCategories(monsterPool.getCategories());
+                if (monsters != null) {
                     BattleGround battleGround = new BattleGround(player.getHeros(), monsters);
-                    battleGround.printBattlefield();
+                    battleGround.battle();
+                    this.player.updateHeros(highestLevel*100);
                 }
             }
         } 
@@ -56,7 +60,6 @@ public class CommonTile extends ReachableTile {
     public void leave() {
         this.player = null;
         this.playerExists = false;
-        this.monsters = new ArrayList<Monster>();
     }
 
     @Override

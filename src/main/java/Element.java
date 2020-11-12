@@ -13,7 +13,15 @@ public abstract class Element {
     public String[] getCategories() {
         return this.categories;
     }
-    
+
+    public int getAttribute(String key) {
+        return this.attributes.get(key);
+    }
+
+    public void changeAttribute(String key, int newValue) {
+        this.attributes.replace(key, newValue);
+    }
+
     public String getType() {
         return this.type;
     }
@@ -21,6 +29,7 @@ public abstract class Element {
     public String getName() {
         return this.name;
     }
+
 
     public String[] getAttributes() {
         String[] attributes = this.attributes.getAttributes();

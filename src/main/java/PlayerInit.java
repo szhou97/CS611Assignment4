@@ -61,6 +61,7 @@ public class PlayerInit {
             Element hero = this.selectHero(enough);
             if (hero != null) {
                 player.addHero(hero);
+                player.setCategories(heros.getCategories());
             } else {
                 break;
             }
@@ -69,7 +70,7 @@ public class PlayerInit {
                 enough = true;
             }
             System.out.println("\nSelected " + count + " hero.");
-            player.printBasicInfo();
+            player.printHeros();
         }
     }
 }
