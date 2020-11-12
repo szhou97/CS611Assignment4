@@ -200,8 +200,7 @@ public class Hero extends Character {
         if (equipments.isEmpty()) {
             selection = 1;
         } else {
-            System.out.println("\t\t\tSelect 1: equip, 2:unequip\n"
-                + "\t\t\tSelect 0 to go back\n\n\n");
+            System.out.println("\n\nSelect 1: equip, 2:unequip\n");
             selection = Controller.intSelection(0, 2);
         }
 
@@ -217,6 +216,7 @@ public class Hero extends Character {
             if (item == null) {
                 return false;
             } else {
+                System.out.println("\n" + item.getName() + " selected");
                 return this.equipPoll(item, selection);
             }
         }

@@ -33,7 +33,12 @@ public class Player {
 
     public void viewHeroInventory() {
         Hero hero = this.selectHero();
-        hero.getInventory().printInventory();
+        if (hero != null) {
+            hero.getInventory().printInventory();
+            
+        } else {
+            return;
+        }
     }
 
     public Hero selectHero() {
@@ -66,15 +71,20 @@ public class Player {
                     int wealth = hero.getAttribute("wealth") + levelCoins;
                     hero.changeAttribute("experience", exp);
                     hero.changeAttribute("wealth", wealth);
-                    if ( (exp - hero.getExp()) >= level*10 ) {
+                    int expRequired = level*10;
+                    int expDiff = exp - hero.getExp();
+                    System.out.println(expRequired + " " + expDiff);
+                    if ( expDiff >= expRequired ) {
                         System.out.print("\t\tHero " 
                             + ColorScheme.ANSI_RED
                             + hero.getName()
                             + ColorScheme.ANSI_RESET
-                            + " has leveled up!! ");
+                            + " has leveled up!! \n\n");
                         hero.levelUp();
+                        Controller.pressEnter();
                     }
                 } else {
+                    System.out.println("Heros have been revived. Better luck next time!");
                     hero.reset();
                 }
             }

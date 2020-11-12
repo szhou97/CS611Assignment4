@@ -10,6 +10,7 @@ public class Controller {
 
     public static void pressEnter() {
         Scanner scanner = new Scanner(System.in);
+        System.out.println("PRESS ENTER TO CONTINUE");
         scanner.nextLine();
     }
 
@@ -55,42 +56,47 @@ public class Controller {
         return result;
     }
 
-    public void mainControll() {
-        String [] controls = {"w", "a", "s", "d", "q", "h", "i", "help", "e", "u"};
+    public int mainControll() {
+        String [] controls = {"w", "a", "s", "d", "q", "h", "i", "h", "e", "u"};
         String input = Controller.stringSelection(controls);
         System.out.print(ColorScheme.ANSI_CYAN);
         Hero hero = null;
         switch(input) {
             case "q":
-                System.out.println("\nGoodbye");
+                player.printHeros();
+                System.out.println("\nGOODBYE ADVENTURER");
                 System.exit(0);
                 break;
             case "h":
-                System.out.println("\nSELECTED TO USE A POTION");
+                System.out.println(Messages.HELP);
                 break;
             case "i":
-                System.out.println("\nSELECTED TO VIEW A HERO INVENTORY");
+                System.out.println("\nSELECTED TO VIEW A HERO INFORMATION/INVENTORY");
                 player.viewHeroInventory();
+                Controller.pressEnter();
                 break;
             case "e":
-                System.out.println("\nEQUIP/UNEQUIP AN ITEM FOR A HERO");
+                System.out.println("\nSELECTED TO EQUIP/UNEQUIP AN ITEM FOR A HERO");
                 hero = player.selectHero();
                 if (hero != null) {
                     hero.equipAnItem();
                 }
                 break;
             case "u":
-                System.out.println("\nUSE A POTION FOR A HERO");
+                System.out.println("\nSELECTED TO USE A POTION FOR A HERO");
                 hero = player.selectHero();
                 if (hero != null) {
                     hero.usePotion();
                 }
-                player.selectHero().usePotion();
                 break;
             default:
-                System.out.println("\nPRESS ENTER TO CONTINUE");
                 grid.updatePosition(input);
         }
         System.out.print(ColorScheme.ANSI_RESET);
+        if (input.equals("q")) {
+            return -1;
+        } else {
+            return 0;
+        }
     }
 }

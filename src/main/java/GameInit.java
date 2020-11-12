@@ -26,29 +26,37 @@ public class GameInit {
         FileScanner fs = new FileScanner(weaponFiles, armorFiles, 
                                         potionFiles, spellFiles, 
                                         heroFiles, monsterFiles);
-        ElementCollection monsters = fs.loadCharacters(monsterFiles);
-        monsters.printElements(TypeInfo.MONSTER_FORMAT);
-        //System.exit(0);
-        System.out.print(Messages.TITLE);
-        System.out.print(Messages.WELCOME_MESSAGE);
-        System.out.println(Messages.WELCOME_PROMPT);
-        String[] options = {"start", "help"};
-        String selection = Controller.stringSelection(options);
-        System.out.println(selection);
-        if (selection.equals("start")) {
-            PlayerInit pi = new PlayerInit(fs.loadCharacters(heroFiles));
-            Player player = pi.initPlayer();
-            Grid world = new HeroAndLegendsWorld(10, player, 
-                fs.loadItems(), fs.loadCharacters(monsterFiles));
-            Controller controller = new Controller(player, world);
-            this.run(world, controller);
+        String[] options = {"start", "help", "quit"};
+        boolean done = false;
+        while (!done) {
+            System.out.print(Messages.TITLE);
+            System.out.print(Messages.WELCOME_MESSAGE);
+            System.out.println(Messages.WELCOME_PROMPT);
+            String selection = Controller.stringSelection(options);
+            if (selection.equals("start")) {
+                PlayerInit pi = new PlayerInit(fs.loadCharacters(heroFiles));
+                Player player = pi.initPlayer();
+                Grid world = new HeroAndLegendsWorld(10, player, 
+                    fs.loadItems(), fs.loadCharacters(monsterFiles));
+                Controller controller = new Controller(player, world);
+                this.run(world, controller);
+            } else if (selection.equals("help")) {
+                System.out.println(Messages.HELP);
+                Controller.pressEnter();
+            } else if (selection.equals("quit")) {
+                done = true;
+            }
         }
     }
 
-    public void run(Grid world, Controller controller) {
-        while(true) {
+    public int run(Grid world, Controller controller) {
+        boolean done = false;
+        while(!done) {
             world.printGrid();
-            controller.mainControll();
+            if (controller.mainControll() == -1) {
+                done = true;
+            }
         }
+        return 0;
     }
 }

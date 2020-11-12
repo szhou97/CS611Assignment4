@@ -41,6 +41,7 @@ public abstract class Inventory {
     }
 
     public void printInventory() {
+        
         for (String type : types) {
             String bracket = TypeInfo.ITEM_BRACKET;
             this.inventory.get(type).printElements(bracket);

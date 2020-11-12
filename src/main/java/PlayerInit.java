@@ -15,7 +15,7 @@ public class PlayerInit {
     private Element selectHero(boolean enough) {
         Element hero = null;
         ArrayList<String> types = heros.getTypes();
-        System.out.print("\n\n\nChoose: ");
+        System.out.print("\nChoose: ");
         int index = 0;
         boolean selected = false;
         while (!selected) {

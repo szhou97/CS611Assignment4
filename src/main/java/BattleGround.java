@@ -3,6 +3,10 @@ import java.util.ArrayList;
 public class BattleGround {
     private ElementCollection heros;
     private ElementCollection monsters;
+    private Hero currentHero;
+    private Monster currentMonster;
+    private ArrayList<Element> herolist;
+    private ArrayList<Element> monsterlist;
     public BattleGround(ElementCollection heros, ElementCollection monsters) {
         this.heros = heros;
         this.monsters = monsters;
@@ -47,62 +51,69 @@ public class BattleGround {
         System.out.print("\n\n");
     }
 
-    private boolean attack(Hero hero, Monster monster, int damage) {
+    private boolean attack(int damage) {
 
-        if (this.dodged(monster, "monster")) {
+        if (this.dodged(currentMonster, "monster")) {
             System.out.println("\n\t\tOh no, the monster dodged your attack");
         } else {
-            this.executeAttack(hero, monster,  "monster", damage);
+            this.executeAttack(currentHero, currentMonster,  "monster", damage);
+            if (this.checkMonster()) {
+                return true;
+            }
         }
         System.out.println("\n\t\tTHE MONSTER IS FIGHTING BACK");
-        if (this.dodged(hero, "hero")) {
+        if (this.dodged(currentHero, "hero")) {
             System.out.println("\n\t\tYES! You have dodged a monster attack\n\n\n");
         } else {
-            this.executeAttack(monster, hero, "hero", monster.getAttribute("damage"));
+            this.executeAttack(currentMonster, currentHero, 
+                "hero", currentMonster.getAttribute("damage"));
+            if (this.checkHero()) {
+                return true;
+            }
         }
 
         return true;
     }
 
-    private boolean cast(Hero hero, Monster monster) {
+    private boolean cast() {
         Query query = new Query();
         String[] types = {"spells"};
-        Element element = query.processItemRequest(types, hero.getInventory());
+        Element element = query.processItemRequest(types, currentHero.getInventory());
         if (element == null) {
             return false;
         } else {
             Spell spell = (Spell) element;
             int manaCost = spell.getManaCost();
-            int mana = hero.getAttribute("mana");
+            int mana = currentHero.getAttribute("mana");
             if ((mana - manaCost) <= 0) {
                 System.out.println("Insufficient mana");
                 return false;
             } else {
-                hero.changeAttribute("mana", mana - manaCost);
+                currentHero.changeAttribute("mana", mana - manaCost);
             }
             String affectedAttribute = spell.getAffectedAttribute();
-            int baseValue = monster.getAttribute(affectedAttribute);
+            int baseValue = currentMonster.getAttribute(affectedAttribute);
             int newValue = spell.reduceAttribute(baseValue);
-            monster.changeAttribute(affectedAttribute, newValue);
+            currentMonster.changeAttribute(affectedAttribute, newValue);
 
             System.out.print("\n\t\t");
-            this.printCurrentHero(hero, ColorScheme.ANSI_RED);
+            this.printCurrentHero(currentHero, ColorScheme.ANSI_RED);
             System.out.print(" cast ");
             System.out.print(ColorScheme.ANSI_CYAN
                 + spell.getType()
                 + ColorScheme.ANSI_RESET);
             System.out.print("\n\t\t");
-            this.printCurrentHero(monster, ColorScheme.ANSI_PURPLE);
+            this.printCurrentHero(currentMonster, ColorScheme.ANSI_PURPLE);
             System.out.println("'s " + affectedAttribute + " reduced.");
 
 
-            int dexterity = hero.getAttribute("dexterity");
+            int dexterity = currentHero.getAttribute("dexterity");
             int spellDamage = spell.getDamage();
             int finalDamage = (int) (spellDamage 
                     + (dexterity/10000) * spellDamage);
             // Hero attacks
-            this.attack(hero, monster, finalDamage);
-            monster.changeAttribute(affectedAttribute, baseValue);
+            this.attack(finalDamage);
+            currentMonster.changeAttribute(affectedAttribute, baseValue);
         }
         return true;
     }
@@ -114,59 +125,64 @@ public class BattleGround {
     }
 
     private void printCurrentHero(Character character, String color) {
-        System.out.print(color  
+        System.out.print("\n\t\t" + color  
             + character.getName()
             + ColorScheme.ANSI_RESET);
     }
 
-    private void printCurrentBattle(Hero hero, Monster monster) {
-            System.out.println("\t\tCurrent battle between: ");
-            this.printCurrentHero(hero, ColorScheme.ANSI_RED);
-            this.printCharacterDetail(hero);
+    private void printCurrentBattle() {
+            System.out.println("\n\n\t\tCurrent battle between: ");
+            this.printCurrentHero(currentHero, ColorScheme.ANSI_RED);
+            this.printCharacterDetail(currentHero);
             System.out.print("\n\n");
-            this.printCurrentHero(monster, ColorScheme.ANSI_PURPLE);
-            this.printCharacterDetail(monster);
+            this.printCurrentHero(currentMonster, ColorScheme.ANSI_PURPLE);
+            this.printCharacterDetail(currentMonster);
             System.out.print("\n\n");
     }
 
-    private void checkHero(Hero hero, int health, int mana,
-                            ArrayList<Element> herolist) {
-
-        int newHealth = hero.getAttribute("health");
-        int newMana = hero.getAttribute("mana");
+    private boolean checkHero() {
+        int health = currentHero.getHealth();
+        int mana = currentHero.getMana();
+        int newHealth = currentHero.getAttribute("health");
+        int newMana = currentHero.getAttribute("mana");
         int healthIncrease = (int) (health * 0.1);
         int manaIncrease = (int) (mana * 0.1);
         if (newHealth <= 0) {
             System.out.print("\n\t\t");
-            this.printCurrentHero(hero, ColorScheme.ANSI_RED);
+            this.printCurrentHero(currentHero, ColorScheme.ANSI_RED);
             System.out.println(" has fainted");
-            herolist.remove(hero);
+            herolist.remove(currentHero);
+            return true;
         } else if (newHealth + healthIncrease <= health){
             newHealth += healthIncrease;
-            hero.changeAttribute("health", newHealth);
+            currentHero.changeAttribute("health", newHealth);
         }
 
         if (newMana + manaIncrease <= mana) {
             newMana += manaIncrease;
-            hero.changeAttribute("mana", newMana);
+            currentHero.changeAttribute("mana", newMana);
         }
+        return false;
     }
 
-    private void checkMonster(Monster monster, int health, 
-        ArrayList<Element> monsterlist) {
+    private boolean checkMonster() {
         
-        if (monster.getAttribute("health") <= 0) {
+        if (currentMonster.getAttribute("health") <= 0) {
             System.out.print("\n\t\t");
-            this.printCurrentHero(monster, ColorScheme.ANSI_PURPLE);
+            this.printCurrentHero(currentMonster, ColorScheme.ANSI_PURPLE);
             System.out.println(" has been defeated");
-            monsterlist.remove(monster);
+            monsterlist.remove(currentMonster);
+            return true;
+        } else {
+            return false;
         }
     }
 
-    public ArrayList<Element> battle() {
+    public void battle() {
+        System.out.println(Messages.BATTLEFIELD);
         int heroIndex = 0, monsterIndex = 0;
-        ArrayList<Element> herolist = this.heros.getAllElements();
-        ArrayList<Element> monsterlist = this.monsters.getAllElements();
+        this.herolist = this.heros.getAllElements();
+        this.monsterlist = this.monsters.getAllElements();
         int round = 1;
         this.printBattlefield();
         while (herolist.size() != 0 && monsterlist.size() != 0) {
@@ -175,49 +191,61 @@ public class BattleGround {
                 + "\n\n\n\nROUND " + round 
                 + ColorScheme.ANSI_RESET);
 
-            Hero hero = (Hero) herolist.get(heroIndex);
-            Monster monster = (Monster) monsterlist.get(monsterIndex);
+            currentHero = (Hero) herolist.get(heroIndex);
+            currentMonster = (Monster) monsterlist.get(monsterIndex);
             
-            this.printCurrentBattle(hero, monster);
-            hero.printCurrentSetup();
+            this.printCurrentBattle();
+            currentHero.printCurrentSetup();
             boolean complete = false;
             while (!complete) {
-                System.out.println(Messages.MOVE_SELECTION);
                 String[] options = Messages.MOVE_OPTIONS;
+                System.out.println("Choose your move. Select 'h' for help information");
                 String selection = Controller.stringSelection(options);
-                if (selection.equals("attack")) { 
+                if (selection.equals("a")) { 
                     System.out.println("\t\t" 
                         + ColorScheme.ANSI_RED
-                        + hero.getName()
+                        + currentHero.getName()
                         + ColorScheme.ANSI_RESET
                         + " is attacking "
                         + ColorScheme.ANSI_PURPLE
-                        + monster.getName()
+                        + currentMonster.getName()
                         + ColorScheme.ANSI_RESET);
-                    complete = this.attack(hero, monster, hero.getDamage());
-                    this.printCurrentBattle(hero, monster);
-                } else if (selection.equals("equip") || selection.equals("unequip")) {
-                    complete = hero.equipAnItem();
-                } else if (selection.equals("cast")) {
-                    complete = this.cast(hero, monster);
-                    this.printCurrentBattle(hero, monster);
-                } else if (selection.equals("use")) {
-                    complete = hero.usePotion();
+                    complete = this.attack(currentHero.getDamage());
+                    this.printCurrentBattle();
+                } else if (selection.equals("e")) {
+                    complete = currentHero.equipAnItem();
+                } else if (selection.equals("c")) {
+                    complete = this.cast();
+                    this.printCurrentBattle();
+                } else if (selection.equals("u")) {
+                    complete = currentHero.usePotion();
+                } else if (selection.equals("i")) {
+                    System.out.print(ColorScheme.ANSI_YELLOW
+                        + "\n\n\nPrinting current inventory: "
+                        + ColorScheme.ANSI_RESET);
+                    System.out.println(ColorScheme.ANSI_RED
+                        + currentHero.getName()
+                        + ColorScheme.ANSI_RESET);
+                    currentHero.getInventory().printInventory();
+                    currentHero.printCurrentSetup();
+                } else if (selection.equals("h")) {
+                    System.out.println(Messages.HELP);
+                } else if (selection.equals("q")) {
+                    System.out.println("Fight abandoned. "
+                        + "The village has been distroyed by the monsters");
+                    System.exit(0);
+                }
+            
+                heroIndex++;
+                monsterIndex++;
+                if (heroIndex >= herolist.size()) {
+                    heroIndex = 0;
+                    round++;
+                }
+                if (monsterIndex >= monsterlist.size()) {
+                    monsterIndex = 0;
                 }
             }
-            this.checkHero(hero, hero.getHealth(), hero.getMana(), herolist);
-            this.checkMonster(monster, monster.getHealth(), monsterlist);
-            
-            heroIndex++;
-            monsterIndex++;
-            if (heroIndex >= herolist.size()) {
-                heroIndex = 0;
-                round++;
-            }
-            if (monsterIndex >= monsterlist.size()) {
-                monsterIndex = 0;
-            }
         }
-        return herolist;
     }
 }

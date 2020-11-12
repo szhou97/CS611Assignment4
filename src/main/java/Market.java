@@ -24,6 +24,10 @@ public class Market extends ReachableTile {
             int selection = this.menuSelection(1, 2, Messages.YES_OR_NO);
             if (selection == 1) {
                 hero.buy(item);
+                System.out.println("\n\tPURCHASE SUCCESSFUL. Current balance: $"
+                    + hero.getAttribute("wealth"));
+            } else {
+                System.out.println("\n\tPURCHASE CANCELED");
             }
         }
     }
@@ -35,7 +39,10 @@ public class Market extends ReachableTile {
         int selection = this.menuSelection(1, 2, Messages.YES_OR_NO);
         if (selection == 1) {
             hero.sell(item);
-            System.out.println("\n\tCurrent balance: $" + hero.getAttribute("wealth"));
+            System.out.println("\n\tSALE SUCCESSFUL. Current balance: $" 
+                + hero.getAttribute("wealth"));
+        } else {
+            System.out.println("\n\tSALE CANCELLED");
         }
     }
 
@@ -83,7 +90,6 @@ public class Market extends ReachableTile {
         }
         boolean complete = false;
         while (!complete) {
-            System.out.println(Messages.HERO_SELECTION);
             Hero hero = player.selectHero();
             if (hero != null) {
                 this.prompt(hero);
