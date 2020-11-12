@@ -1,5 +1,8 @@
 import java.util.ArrayList;
-
+/**
+ * An accessible tile in the grid that generates a certain number of monsters
+ * as specified. It also creates a battlefield for monsters/heros when applicable
+ */
 public class CommonTile extends ReachableTile {
     private ElementCollection monsterPool;
 
@@ -8,6 +11,9 @@ public class CommonTile extends ReachableTile {
         this.monsterPool = monsterPool;
     }
 
+    /**
+     * Get the list of monsters of proper level in the monster pool
+     */
     private ArrayList<Monster> getValidMonsters(int level) {
         ArrayList<Monster> validMonsters = new ArrayList<Monster>();
         ArrayList<String> types = this.monsterPool.getTypes();
@@ -23,6 +29,12 @@ public class CommonTile extends ReachableTile {
         return validMonsters;
     }
 
+    /**
+     * Creates a collection of the battling monsters
+     * @param number
+     * @param level
+     * @return
+     */
     private ElementCollection generateMonsters(int number, int level) {
         ArrayList<Monster> validMonsters = this.getValidMonsters(level);
         if (validMonsters.size() == 0) {
@@ -42,6 +54,7 @@ public class CommonTile extends ReachableTile {
         this.player = player;
         this.playerExists = true;
         if (!firstArrival) {
+            // Generate monsters 50% of times
             if (ChanceGenerator.generateChance(50)) {
                 int numHeros = player.getNumHeros();
                 int highestLevel = player.getHighestLevel();

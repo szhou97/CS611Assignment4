@@ -1,3 +1,8 @@
+/**
+ * The character class adds attributes that are special to characters in to the
+ * attributes class. It also includes abstract methods necessary for any character
+ * in the game.
+ */
 public abstract class Character extends Element {
     private int health;
     public Character(String[] categories, String type, String name, int level) {

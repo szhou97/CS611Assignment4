@@ -1,5 +1,7 @@
 import java.util.ArrayList;
-
+/**
+ * The hero class adds attributes specific to heros.
+ */
 public class Hero extends Character {
     private final String[] abilityttributes = {
         "mana", "strength", "agility", "dexterity"

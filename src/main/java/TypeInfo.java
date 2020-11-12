@@ -1,3 +1,7 @@
+/**
+ * This class includes information on formats when printing items/characters
+ */
+
 public class TypeInfo {
     public final static String HERO_FORMAT = 
         "%-20s%-6s%-8s%-5s%-10s%-8s%-10s%-8s%-7s\n";

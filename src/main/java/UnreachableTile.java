@@ -1,3 +1,6 @@
+/**
+ * Tiles that cannot be reached
+ */
 public class UnreachableTile extends Tile {
     public UnreachableTile() {
         this.type = "&";

@@ -1,4 +1,4 @@
-public class Potion extends Item implements Comsumable {
+public class Potion extends Item {
     private String name;
     private String attribute;
     public Potion(String[] categories, String type, String name, int price, int minLevel, 
@@ -15,10 +15,6 @@ public class Potion extends Item implements Comsumable {
 
     public int getAttributeIncrease() {
         return this.attributes.get(attribute);
-    }
-    @Override
-    public void useItem() {
-        this.availableNumbers--;
     }
     
     @Override

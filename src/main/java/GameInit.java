@@ -1,23 +1,25 @@
-import java.lang.ProcessBuilder.Redirect.Type;
-
+/**
+ * This class loads the txt files into the program, and initialize the game 
+ * accordingly
+ */
 public class GameInit {
-    private final String[] weaponFiles = {"../resources/Weaponry.txt"};
-    private final String[] armorFiles = {"../resources/Armory.txt"};
-    private final String[] potionFiles = {"../resources/Potions.txt"};
+    private final String[] weaponFiles = {"Weaponry.txt"};
+    private final String[] armorFiles = {"Armory.txt"};
+    private final String[] potionFiles = {"Potions.txt"};
     private final String[] spellFiles = {
-        "../resources/IceSpells.txt",
-        "../resources/FireSpells.txt",
-        "../resources/LightningSpells.txt"
+        "IceSpells.txt",
+        "FireSpells.txt",
+        "LightningSpells.txt"
     };
     private final String[] heroFiles = {
-        "../resources/Warriors.txt",
-        "../resources/Sorcerers.txt",
-        "../resources/Paladins.txt"
+        "Warriors.txt",
+        "Sorcerers.txt",
+        "Paladins.txt"
     };
     private final String[] monsterFiles = {
-        "../resources/Exoskeletons.txt",
-        "../resources/Dragons.txt",
-        "../resources/Spirits.txt"
+        "Exoskeletons.txt",
+        "Dragons.txt",
+        "Spirits.txt"
     };
     public GameInit() {
 

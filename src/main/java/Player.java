@@ -1,5 +1,8 @@
 import java.util.ArrayList;
-
+/**
+ * The player class contains the selected heros for the current game
+ * 
+ */
 public class Player {
     private ElementCollection heros;
     public Player() {

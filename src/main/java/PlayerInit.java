@@ -1,7 +1,12 @@
 import java.util.ArrayList;
-
+/**
+ * Initialize the player of the game by letting the user choose heros.
+ * This class is created and called at the beginning of the game
+ */
 public class PlayerInit {
-    ElementCollection heros;
+    ElementCollection heros;                // The hero pool is a collection
+                                            //  that consists of all the 
+                                            //   available heros
     public PlayerInit(ElementCollection heros) {
         this.heros = heros;
     }
@@ -12,6 +17,9 @@ public class PlayerInit {
         return player;
     }
 
+    /**
+     * Select a hero in the hero pool
+     */
     private Element selectHero(boolean enough) {
         Element hero = null;
         ArrayList<String> types = heros.getTypes();

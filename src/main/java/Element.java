@@ -1,3 +1,8 @@
+/**
+ * The Element class is the base of any element in this program, namely
+ * heros, monsters, and any item. It creates an attributes object where 
+ * each element can store pairs of keys/values
+ */
 public abstract class Element {
     private final String type;
     private final String name;

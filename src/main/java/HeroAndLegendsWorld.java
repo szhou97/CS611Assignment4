@@ -1,3 +1,8 @@
+/**
+ * This class is a subclass of a generic Grid class. It contains initializes
+ * tiles specific to the game of heros and legends, and handles the movement
+ * of the player on the map
+ */
 public class HeroAndLegendsWorld extends Grid {
     private Player player;
     private int playerPositionX;

@@ -1,3 +1,7 @@
+
+/**
+ * The market class allows player to purchase/sell items for heros.
+ */
 public class Market extends ReachableTile {
     private Inventory stock;
     public Market(Inventory stock) {
@@ -103,9 +107,14 @@ public class Market extends ReachableTile {
         this.stock.printInventory();
     }
 
-
     @Override
     boolean reachable() {
         return true;
+    }
+
+    @Override
+    public void leave() {
+        this.player = null;
+        this.playerExists = false;
     }
 }

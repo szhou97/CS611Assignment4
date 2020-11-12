@@ -1,5 +1,10 @@
 import java.util.Hashtable;
-
+/**
+ * The Inventory class contains a hashtable of collections. Each collecion
+ * is a type of item available in this game. It contains some utility methods
+ * for retrieving information of the inventory. The market stock and player
+ * inventory both extends this class.
+ */
 public abstract class Inventory {
     protected Hashtable<String, ElementCollection> inventory;
     protected String[] types;

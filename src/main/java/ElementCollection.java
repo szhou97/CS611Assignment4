@@ -1,6 +1,10 @@
 import java.util.ArrayList;
 import java.util.Hashtable;
-
+/**
+ * This class uses the data structure of a hashtable, where each key is matched
+ * with an ArrayList. Each key is a type, with a list of elements with the same
+ * type
+ */
 public class ElementCollection {
     private Hashtable<String, ArrayList<Element>> elements;
     private ArrayList<String> types;

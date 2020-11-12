@@ -1,7 +1,10 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-
+/**
+ * This class reads the files and put the elements of the file into the program's
+ * data structure
+ */
 public class FileScanner {
     private String[] weaponFiles;
     private String[] armorFiles;

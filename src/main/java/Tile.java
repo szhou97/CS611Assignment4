@@ -1,3 +1,6 @@
+/**
+ * A tile class represents a tile in the grid.
+ */
 public abstract class Tile {
     protected String type;
     protected boolean playerExists;

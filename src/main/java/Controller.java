@@ -1,5 +1,8 @@
 import java.util.Scanner;
-
+/**
+ * This class controls the player's movement on the grid, as well as some other
+ * input methods
+ */
 public class Controller {
     private Grid grid;
     private Player player;

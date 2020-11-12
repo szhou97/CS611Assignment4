@@ -1,3 +1,6 @@
+/**
+ * A generic Grid class that contains utility methods for its tiles
+ */
 public abstract class Grid {
     protected Tile[][] grid;
     private int size;
